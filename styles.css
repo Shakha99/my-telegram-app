@@ -1,0 +1,15 @@
+body {
+    margin: 0;  /* Убираем отступы */
+    font-family: Arial, sans-serif;  /* Шрифт как в Telegram */
+    background-color: var(--tg-theme-bg-color);  /* Фон из темы Telegram */
+    color: var(--tg-theme-text-color);  /* Цвет текста из темы */
+}
+
+.container {
+    display: flex;  /* Делаем контейнер гибким */
+    flex-direction: column;  /* Элементы в столбик */
+    align-items: center;  /* По центру */
+    justify-content: center;  /* Вертикально по центру */
+    height: 100vh;  /* На весь экран */
+    padding: 20px;  /* Отступы внутри */
+}
