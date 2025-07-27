@@ -9,24 +9,67 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* Убрали justify-content: center; чтобы элементы были сверху вниз, а не по центру экрана */
     height: 100vh;
     padding: 20px;
+    overflow-y: auto;  /* Если контента много, можно скроллить */
 }
 
-/* Новые стили для кнопок */
+/* Стили для картинки (большая, responsive) */
+.product-image {
+    width: 100%;  /* На всю ширину контейнера */
+    max-width: 400px;  /* Максимум 400px, чтобы не была огромной */
+    height: auto;  /* Сохраняет пропорции */
+    margin-bottom: 20px;  /* Отступ снизу */
+    border-radius: 10px;  /* Закруглённые углы */
+}
+
+/* Стили для названия и описания */
+h2 {
+    margin: 10px 0;
+    font-size: 24px;
+}
+
+p {
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* Стили для цен (flex: слева скидка, справа оригинал) */
+.prices {
+    display: flex;
+    justify-content: space-between;  /* Раскидывает по сторонам */
+    width: 100%;
+    max-width: 300px;  /* Чтобы не растягивалось */
+    margin: 20px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.discount-price {
+    color: green;  /* Зелёный для скидки */
+}
+
+.original-price {
+    text-decoration: line-through;  /* Зачёркнутая цена */
+    color: gray;
+}
+
+/* Старые стили для кнопок */
 button {
-    padding: 10px 20px;  /* Размер кнопки */
-    margin: 10px 0;  /* Отступы между кнопками */
-    font-size: 16px;  /* Размер текста */
-    cursor: pointer;  /* Курсор как рука */
-    background-color: var(--tg-theme-button-color);  /* Цвет кнопки из темы Telegram */
-    color: var(--tg-theme-button-text-color);  /* Цвет текста */
-    border: none;  /* Без рамки */
-    border-radius: 5px;  /* Закруглённые углы */
-    transition: background-color 0.3s;  /* Плавный hover-эффект */
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: var(--tg-theme-button-color);
+    color: var(--tg-theme-button-text-color);
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    width: 100%;  /* Кнопки на всю ширину для мобильного */
+    max-width: 300px;
 }
 
 button:hover {
-    background-color: var(--tg-theme-secondary-bg-color);  /* Цвет при наведении */
+    background-color: var(--tg-theme-secondary-bg-color);
 }
