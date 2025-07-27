@@ -1,0 +1,32 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--tg-theme-bg-color);
+    color: var(--tg-theme-text-color);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+/* Новые стили для кнопок */
+button {
+    padding: 10px 20px;  /* Размер кнопки */
+    margin: 10px 0;  /* Отступы между кнопками */
+    font-size: 16px;  /* Размер текста */
+    cursor: pointer;  /* Курсор как рука */
+    background-color: var(--tg-theme-button-color);  /* Цвет кнопки из темы Telegram */
+    color: var(--tg-theme-button-text-color);  /* Цвет текста */
+    border: none;  /* Без рамки */
+    border-radius: 5px;  /* Закруглённые углы */
+    transition: background-color 0.3s;  /* Плавный hover-эффект */
+}
+
+button:hover {
+    background-color: var(--tg-theme-secondary-bg-color);  /* Цвет при наведении */
+}
