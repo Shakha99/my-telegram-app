@@ -3,31 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моё первое Telegram Web App</title>
+    <title>Магазин в Telegram Web App</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <div class="container">
-        <!-- 1. Большая картинка товара наверху -->
-        <img src="https://via.placeholder.com/400x300?text=Товар+Смартфон" alt="Смартфон XYZ" class="product-image">
-        
-        <!-- 2. Название товара под картинкой -->
-        <h2>Смартфон XYZ</h2>
-        
-        <!-- Описание (ты сказал "после описания цены", так что добавим простое описание) -->
-        <p>Это крутой смартфон с мощной камерой и долгим аккумулятором. Идеален для повседневного использования!</p>
-        
-        <!-- 3. Цены: слева со скидкой, справа оригинальная -->
-        <div class="prices">
-            <span class="discount-price">8000 руб</span>
-            <span class="original-price">10000 руб</span>
+        <!-- Кнопки для переключения табов (два окошка) -->
+        <div class="tabs">
+            <button id="catalogTab" class="tab-button active">Каталог</button>
+            <button id="cartTab" class="tab-button">Корзина</button>
         </div>
         
-        <!-- 4. Кнопка "Купить по скидке" внизу -->
-        <button id="buyBtn">Купить по скидке</button>
+        <!-- Первый таб: Каталог с баннером и списком товаров -->
+        <div id="catalog" class="tab-content active">
+            <!-- Баннер (превью сверху) -->
+            <img src="https://via.placeholder.com/400x150?text=Акция:+Скидки+до+20%25" alt="Баннер акции" class="banner">
+            
+            <!-- Список товаров (будет заполнен JS) -->
+            <div id="productList" class="product-list"></div>
+        </div>
         
-        <!-- Старые кнопки оставляем для теста -->
+        <!-- Второй таб: Корзина (показывает купленные товары) -->
+        <div id="cart" class="tab-content">
+            <h2>Ваша корзина</h2>
+            <div id="cartItems" class="cart-items"></div>
+            <p id="cartEmpty" class="cart-empty">Корзина пуста. Добавьте товары из каталога!</p>
+        </div>
+        
+        <!-- Старые кнопки для теста (можно убрать позже) -->
         <button id="showAlertBtn">Показать алерт</button>
         <button id="sendDataBtn">Отправить данные в бот</button>
         <button id="closeAppBtn">Закрыть приложение</button>

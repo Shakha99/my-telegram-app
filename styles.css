@@ -9,49 +9,120 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Убрали justify-content: center; чтобы элементы были сверху вниз, а не по центру экрана */
     height: 100vh;
-    padding: 20px;
-    overflow-y: auto;  /* Если контента много, можно скроллить */
+    padding: 10px;
+    overflow-y: auto;
 }
 
-/* Стили для картинки (большая, responsive) */
-.product-image {
-    width: 100%;  /* На всю ширину контейнера */
-    max-width: 400px;  /* Максимум 400px, чтобы не была огромной */
-    height: auto;  /* Сохраняет пропорции */
-    margin-bottom: 20px;  /* Отступ снизу */
-    border-radius: 10px;  /* Закруглённые углы */
+/* Стили для табов */
+.tabs {
+    display: flex;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 10px;
 }
 
-/* Стили для названия и описания */
-h2 {
-    margin: 10px 0;
-    font-size: 24px;
+.tab-button {
+    flex: 1;
+    padding: 10px;
+    background-color: var(--tg-theme-secondary-bg-color);
+    color: var(--tg-theme-text-color);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-p {
-    margin: 10px 0;
+.tab-button.active {
+    background-color: var(--tg-theme-button-color);
+    color: var(--tg-theme-button-text-color);
+}
+
+/* Контент табов */
+.tab-content {
+    display: none;
+    width: 100%;
+    max-width: 400px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Баннер в каталоге */
+.banner {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+/* Список товаров (карточки для листания) */
+.product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product-card {
+    background-color: var(--tg-theme-secondary-bg-color);
+    padding: 10px;
+    border-radius: 10px;
     text-align: center;
 }
 
-/* Стили для цен (flex: слева скидка, справа оригинал) */
-.prices {
-    display: flex;
-    justify-content: space-between;  /* Раскидывает по сторонам */
+.product-card img {
     width: 100%;
-    max-width: 300px;  /* Чтобы не растягивалось */
-    margin: 20px 0;
+    height: auto;
+    border-radius: 10px;
+}
+
+.product-card h3 {
+    margin: 10px 0;
     font-size: 18px;
+}
+
+.product-card .prices {
+    display: flex;
+    justify-content: space-between;
     font-weight: bold;
 }
 
-.discount-price {
-    color: green;  /* Зелёный для скидки */
+.product-card .discount-price {
+    color: green;
 }
 
-.original-price {
-    text-decoration: line-through;  /* Зачёркнутая цена */
+.product-card .original-price {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.product-card button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Корзина */
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cart-item {
+    background-color: var(--tg-theme-secondary-bg-color);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.cart-item img {
+    width: 100px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.cart-empty {
+    text-align: center;
     color: gray;
 }
 
@@ -66,8 +137,6 @@ button {
     border: none;
     border-radius: 5px;
     transition: background-color 0.3s;
-    width: 100%;  /* Кнопки на всю ширину для мобильного */
-    max-width: 300px;
 }
 
 button:hover {
