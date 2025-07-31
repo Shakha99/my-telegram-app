@@ -1,124 +1,71 @@
-// Получаем доступ к Telegram API
-const webApp = window.Telegram.WebApp;
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Telegram Web App SDK
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
 
-// Говорим Telegram, что приложение готово
-webApp.ready();
-
-// Расширяем на весь экран
-webApp.expand();
-
-// Массив товаров (примеры, можно добавить больше)
-const products = [
-    {
-        id: 1,
-        name: 'Смартфон XYZ',
-        description: 'Крутой смартфон',
-        image: 'https://via.placeholder.com/200x150?text=Смартфон',
-        discountPrice: 8000,
-        originalPrice: 10000
-    },
-    {
-        id: 2,
-        name: 'Наушники ABC',
-        description: 'Беспроводные наушники',
-        image: 'https://via.placeholder.com/200x150?text=Наушники',
-        discountPrice: 2000,
-        originalPrice: 3000
-    },
-    {
-        id: 3,
-        name: 'Часы DEF',
-        description: 'Умные часы',
-        image: 'https://via.placeholder.com/200x150?text=Часы',
-        discountPrice: 5000,
-        originalPrice: 7000
-    }
-];
-
-// Корзина (пустая сначала)
-let cart = [];
-
-// Функция для рендера списка товаров
-function renderProducts() {
-    const productList = document.getElementById('productList');
-    productList.innerHTML = ''; // Очищаем
-    products.forEach(product => {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.innerHTML = `
-            <img src="${product.image}" alt="${product.name}">
-            <h3>${product.name}</h3>
-            <div class="prices">
-                <span class="discount-price">${product.discountPrice} руб</span>
-                <span class="original-price">${product.originalPrice} руб</span>
-            </div>
-            <button onclick="addToCart(${product.id})">Купить по скидке</button>
-        `;
-        productList.appendChild(card);
-    });
-}
-
-// Функция добавления в корзину
-function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    if (product) {
-        cart.push(product);
-        renderCart();
-        webApp.showAlert(`Товар "${product.name}" добавлен в корзину!`);
-    }
-}
-
-// Функция рендера корзины
-function renderCart() {
-    const cartItems = document.getElementById('cartItems');
-    const cartEmpty = document.getElementById('cartEmpty');
-    cartItems.innerHTML = '';
-    if (cart.length === 0) {
-        cartEmpty.style.display = 'block';
+    // Apply Telegram theme
+    if (tg.colorScheme === 'dark') {
+        document.documentElement.classList.add('dark');
     } else {
-        cartEmpty.style.display = 'none';
-        cart.forEach(item => {
-            const cartItem = document.createElement('div');
-            cartItem.className = 'cart-item';
-            cartItem.innerHTML = `
-                <img src="${item.image}" alt="${item.name}">
-                <h3>${item.name}</h3>
-                <p>Цена: ${item.discountPrice} руб</p>
-            `;
-            cartItems.appendChild(cartItem);
-        });
+        document.documentElement.classList.remove('dark');
     }
-}
 
-// Переключение табов
-document.getElementById('catalogTab').addEventListener('click', () => {
-    switchTab('catalog');
-});
-document.getElementById('cartTab').addEventListener('click', () => {
-    switchTab('cart');
-});
+    // Handle logo click
+    document.getElementById('logo').addEventListener('click', () => {
+        window.location.reload();
+    });
 
-function switchTab(tabId) {
-    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-    document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
-    document.getElementById(tabId + 'Tab').classList.add('active');
-}
+    // Notification button with random red dot simulation
+    const notificationBtn = document.getElementById('notification-btn');
+    const notificationDot = document.getElementById('notification-dot');
+    const hasNotifications = Math.random() > 0.5; // Simulate notifications
+    if (hasNotifications) {
+        notificationDot.classList.remove('hidden');
+    }
+    notificationBtn.addEventListener('click', () => {
+        tg.showAlert('Notifications page coming soon!');
+    });
 
-// Инициализация: Рендерим товары и корзину
-renderProducts();
-renderCart();
+    // Navigation buttons
+    document.getElementById('nav-shop').addEventListener('click', () => {
+        tg.showAlert('Navigating to Shop page');
+    });
+    document.getElementById('nav-profile').addEventListener('click', () => {
+        tg.showAlert('Navigating to Profile page');
+    });
 
-// Старые функции
-document.getElementById('showAlertBtn').addEventListener('click', () => {
-    webApp.showAlert('Привет! Это алерт из Telegram.');
-});
+    // Products grid
+    const productsGrid = document.getElementById('products-grid');
+    let productCount = 4;
 
-document.getElementById('sendDataBtn').addEventListener('click', () => {
-    const data = { message: 'Данные от пользователя' };
-    webApp.sendData(JSON.stringify(data));
-});
+    function createProductCard(id) {
+        const card = document.createElement('div');
+        card.className = 'product-card bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex flex-col items-center';
+        card.innerHTML = `
+            <img src="https://via.placeholder.com/200?text=Product+${id}" alt="Product ${id}" class="w-full h-40 object-cover rounded-md mb-2">
+            <h3 class="text-sm font-medium">Product ${id}</h3>
+            <p class="text-gray-600 dark:text-gray-300">$${10 + id}</p>
+            <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Buy</button>
+        `;
+        card.querySelector('button').addEventListener('click', () => {
+            tg.showAlert('Added to cart!');
+        });
+        return card;
+    }
 
-document.getElementById('closeAppBtn').addEventListener('click', () => {
-    webApp.close();
+    // Initial products
+    for (let i = 1; i <= 4; i++) {
+        productsGrid.appendChild(createProductCard(i));
+    }
+
+    // Infinite scroll simulation
+    window.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+            for (let i = productCount + 1; i <= productCount + 4; i++) {
+                productsGrid.appendChild(createProductCard(i));
+            }
+            productCount += 4;
+        }
+    });
 });

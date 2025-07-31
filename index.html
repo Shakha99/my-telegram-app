@@ -1,41 +1,67 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Магазин в Telegram Web App</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>My Shop - Telegram Web App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <div class="container">
-        <!-- Кнопки для переключения табов (два окошка) -->
-        <div class="tabs">
-            <button id="catalogTab" class="tab-button active">Каталог</button>
-            <button id="cartTab" class="tab-button">Корзина</button>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-10 bg-white dark:bg-gray-800 shadow-md flex items-center justify-between px-4 py-3">
+        <a href="#" id="logo" class="flex items-center">
+            <svg class="w-8 h-8 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M21 7h-2.58l.76-3.04A1 1 0 0018.24 3H5.76A1 1 0 004.82 4.96L5.58 8H3a1 1 0 00-1 1v10a1 1 0 001 1h18a1 1 0 001-1V8a1 1 0 00-1-1zM6.76 5h10.48l-.76 3H7.52l-.76-3zm-1 5v8H3v-8h2.76zm14 8H7v-8h12v8zm2-8h-2.24v8H21v-8z"/>
+            </svg>
+        </a>
+        <button id="notification-btn" class="relative p-2 rounded-full bg-gray-200 dark:bg-gray-700">
+            <svg class="w-6 h-6 text-gray-600 dark:text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 22a2 2 0 01-2-2h4a2 2 0 01-2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4a1.5 1.5 0 00-3 0v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+            </svg>
+            <span id="notification-dot" class="hidden absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full"></span>
+        </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-16 pb-20">
+        <!-- Banner -->
+        <div class="w-full h-56 bg-gray-300 dark:bg-gray-700 flex items-center justify-center">
+            <img src="https://via.placeholder.com/600x300?text=Welcome+to+My+Shop" alt="Banner" class="w-full h-full object-cover">
         </div>
-        
-        <!-- Первый таб: Каталог с баннером и списком товаров -->
-        <div id="catalog" class="tab-content active">
-            <!-- Баннер (превью сверху) -->
-            <img src="https://via.placeholder.com/400x150?text=Акция:+Скидки+до+20%25" alt="Баннер акции" class="banner">
-            
-            <!-- Список товаров (будет заполнен JS) -->
-            <div id="productList" class="product-list"></div>
-        </div>
-        
-        <!-- Второй таб: Корзина (показывает купленные товары) -->
-        <div id="cart" class="tab-content">
-            <h2>Ваша корзина</h2>
-            <div id="cartItems" class="cart-items"></div>
-            <p id="cartEmpty" class="cart-empty">Корзина пуста. Добавьте товары из каталога!</p>
-        </div>
-        
-        <!-- Старые кнопки для теста (можно убрать позже) -->
-        <button id="showAlertBtn">Показать алерт</button>
-        <button id="sendDataBtn">Отправить данные в бот</button>
-        <button id="closeAppBtn">Закрыть приложение</button>
-    </div>
+
+        <!-- Products Section -->
+        <section class="container mx-auto px-4 py-6">
+            <h2 class="text-xl font-semibold mb-4">Our Products</h2>
+            <div id="products-grid" class="grid grid-cols-2 gap-4">
+                <!-- Product cards will be injected here by JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-10 bg-white dark:bg-gray-800 rounded-full shadow-lg flex items-center justify-around py-2 px-4 w-11/12 max-w-md">
+        <button class="flex flex-col items-center text-blue-500 font-semibold" id="nav-home">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+            <span class="text-xs">Home</span>
+        </button>
+        <button class="flex flex-col items-center text-gray-600 dark:text-gray-300" id="nav-shop">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M21 7h-2.58l.76-3.04A1 1 0 0018.24 3H5.76A1 1 0 004.82 4.96L5.58 8H3a1 1 0 00-1 1v10a1 1 0 001 1h18a1 1 0 001-1V8a1 1 0 00-1-1z"/>
+            </svg>
+            <span class="text-xs">Shop</span>
+        </button>
+        <button class="flex flex-col items-center text-gray-600 dark:text-gray-300" id="nav-profile">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+            <span class="text-xs">Profile</span>
+        </button>
+    </nav>
+
     <script src="script.js"></script>
 </body>
 </html>
